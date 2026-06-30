@@ -45,19 +45,33 @@ Spring Boot Onboarding Demo
 
 # 📁 核心代码结构
 Plaintext
+
 onboarding-demo
+
 ├── src/main/java/org/example
+
 │   ├── aspect/            # AOP 切面类 (日志监控)
+
 │   ├── config/            # Spring 全局配置 (拦截器注册)
+
 │   ├── controller/        # REST 接口层
+
 │   ├── entity/            # 数据库实体类 (MyBatis-Plus 映射)
+
 │   ├── interceptor/       # 拦截器具体实现 (登录校验)
+
 │   ├── listener/          # MQ 消费者监听器
+
 │   ├── mapper/            # 数据访问层接口
+
 │   ├── service/           # 业务逻辑层接口及实现类
+
 │   └── Main.java          # Spring Boot 启动类
+
 └── src/main/resources
+
     └── application.yml    # 核心配置文件 (数据库、Redis、MQ 均在此配置)
+    
 # ⚙️ 快速开始
 ## 1. 环境准备
 请确保本地或 Docker 环境中已成功运行以下中间件：
@@ -72,26 +86,44 @@ RocketMQ (NameServer 端口: 9876, Broker 端口: 10911)
 执行以下 SQL 脚本建立测试数据：
 
 SQL
+
 CREATE DATABASE IF NOT EXISTS onboarding_demo DEFAULT CHARACTER SET utf8mb4;
+
 USE onboarding_demo;
 
+
 CREATE TABLE `t_product` (
+
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  
   `product_name` VARCHAR(50) NOT NULL,
+  
   `stock` INT NOT NULL,
+  
   PRIMARY KEY (`id`)
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 INSERT INTO `t_product` (`id`, `product_name`, `stock`) VALUES (1, '掌上先机限量马克杯', 100);
 
+
 CREATE TABLE `t_order` (
+
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  
   `user_id` VARCHAR(50) NOT NULL,
+  
   `product_id` BIGINT NOT NULL,
+  
   `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  
   PRIMARY KEY (`id`),
+  
   KEY `idx_user_id` (`user_id`) 
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 ## 3. 修改配置
 打开 src/main/resources/application.yml，修改以下信息为你本地的真实配置：
 
